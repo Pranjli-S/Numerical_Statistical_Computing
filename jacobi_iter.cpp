@@ -1,36 +1,40 @@
 #include <iostream>
-#include <vector>
+#include <iomanip>
+#include <cmath>
 
 using namespace std;
 
 int main() {
-    int n, iter;
-    cout << "Enter number of unknowns: "; cin >> n;
-    
-    float a[10][10], b[10], x[10] = {0}, x_new[10];
+    double x = 0, y = 0, z = 0;
+    double x_new, y_new, z_new;
+    int iterations;
 
-    cout << "Enter coefficients row-wise (A matrix):\n";
-    for(int i=0; i<n; i++)
-        for(int j=0; j<n; j++) cin >> a[i][j];
+    cout << "Enter number of iterations: ";
+    cin >> iterations;
 
-    cout << "Enter constants (B vector):\n";
-    for(int i=0; i<n; i++) cin >> b[i];
+    // Header for the output table
+    cout << setw(4) << "i" << " | " << fixed << setprecision(4) 
+         << setw(10) << "x" << " | " 
+         << setw(10) << "y" << " | " 
+         << setw(10) << "z" << endl;
+    cout << "---------------------------------------------" << endl;
 
-    cout << "Enter number of iterations: "; cin >> iter;
+    for (int i = 1; i <= iterations; i++) {
+        // Jacobi formulas from the notes
+        x_new = (17 - y + (2 * z)) / 20.0;
+        y_new = (-18 - (3 * x) + z) / 20.0;
+        z_new = (25 - (2 * x) + (3 * y)) / 20.0;
 
-    for (int k = 0; k < iter; k++) {
-        for (int i = 0; i < n; i++) {
-            float sum = b[i];
-            for (int j = 0; j < n; j++) {
-                if (i != j) sum -= a[i][j] * x[j];
-            }
-            x_new[i] = sum / a[i][i];
-        }
-        for (int i = 0; i < n; i++) x[i] = x_new[i];
+        // Update values after all new values are calculated
+        x = x_new;
+        y = y_new;
+        z = z_new;
+
+        // Output current iteration results
+        cout << setw(4) << i << " | " << setw(10) << x 
+             << " | " << setw(10) << y 
+             << " | " << setw(10) << z << endl;
     }
-
-    cout << "\nSolutions:\n";
-    for(int i=0; i<n; i++) cout << "x" << i+1 << " = " << x[i] << endl;
 
     return 0;
 }

@@ -1,30 +1,45 @@
 #include <iostream>
-#include <cmath>
 #include <iomanip>
+#include <cmath>
 
 using namespace std;
 
+// Define function
 double f(double x) {
-    return x*x*x - 4*x - 9; // Example function
+    return x * x * x - 4 * x - 9;
 }
 
 int main() {
-    double a, b, tol, c;
-    cout << "Enter interval [a, b] and tolerance: ";
+    double a, b, c, tol;
+    
+    cout << "Enter interval [a, b] & tolerance: ";
     cin >> a >> b >> tol;
 
+    // Check validity of interval
     if (f(a) * f(b) >= 0) {
-        cout << "Bisection method fails. f(a) and f(b) must have opposite signs.";
+        cout << "Invalid interval. f(a) & f(b) must have opposite signs." << endl;
         return 0;
     }
 
+    // Bisection method
     while ((b - a) >= tol) {
         c = (a + b) / 2;
-        if (f(c) == 0.0) break;
-        else if (f(c) * f(a) < 0) b = c;
-        else a = c;
+
+        if (fabs(f(c)) < tol) {
+            break;
+        }
+
+        if (f(c) * f(a) < 0) {
+            b = c;
+        } else {
+            a = c;
+        }
     }
 
-    cout << fixed << setprecision(4) << "Root: " << c << endl;
+    // Final root
+    c = (a + b) / 2;
+    cout << fixed << setprecision(6);
+    cout << "Root = " << c << endl;
+
     return 0;
 }

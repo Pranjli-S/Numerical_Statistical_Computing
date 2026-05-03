@@ -1,48 +1,37 @@
 #include <iostream>
 #include <iomanip>
-#include <cmath>
 
 using namespace std;
 
 int main() {
-    int n, iterations;
-    float a[10][10], b[10], x[10] = {0}; // Initialize guesses to 0
-
-    cout << "Enter number of unknowns (n): ";
-    cin >> n;
-
-    cout << "Enter coefficients row-wise (A matrix):\n";
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            cin >> a[i][j];
-        }
-    }
-
-    cout << "Enter constants (B vector):\n";
-    for (int i = 0; i < n; i++) {
-        cin >> b[i];
-    }
+    // Initializing variables as seen in your previous logic
+    double x = 0, y = 0, z = 0;
+    int iterations;
 
     cout << "Enter number of iterations: ";
     cin >> iterations;
 
-    // Gauss-Seidel Logic
-    for (int k = 1; k <= iterations; k++) {
-        for (int i = 0; i < n; i++) {
-            float sum = b[i];
-            for (int j = 0; j < n; j++) {
-                if (i != j) {
-                    sum -= a[i][j] * x[j];
-                }
-            }
-            // In Gauss-Seidel, we update x[i] and use it immediately for the next variable
-            x[i] = sum / a[i][i];
-        }
-    }
+    // Header for the output table
+    cout << setw(4) << "i" << " | " << fixed << setprecision(4) 
+         << setw(10) << "x" << " | " 
+         << setw(10) << "y" << " | " 
+         << setw(10) << "z" << endl;
+    cout << "---------------------------------------------" << endl;
 
-    cout << fixed << setprecision(6) << "\nSolutions after " << iterations << " iterations:\n";
-    for (int i = 0; i < n; i++) {
-        cout << "x" << i + 1 << " = " << x[i] << endl;
+    for (int i = 1; i <= iterations; i++) {
+        /* In Gauss-Seidel, we update the variables directly.
+           The values of 'x' updated in the first line are 
+           immediately used to calculate 'y' and 'z'.
+        */
+        
+        x = (17 - y + (2 * z)) / 20.0;
+        y = (-18 - (3 * x) + z) / 20.0;
+        z = (25 - (2 * x) + (3 * y)) / 20.0;
+
+        // Output current iteration results
+        cout << setw(4) << i << " | " << setw(10) << x 
+             << " | " << setw(10) << y 
+             << " | " << setw(10) << z << endl;
     }
 
     return 0;
